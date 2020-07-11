@@ -25,6 +25,10 @@ public:
 		}
 	}
 
+	~segment_tree() {
+		delete[] st;
+	}
+
 	void update(int idx, const segment_data& val) {
 		idx += size;
 		st[idx] = val;
