@@ -11,7 +11,7 @@ struct segment_data {
 
 class segment_tree {
 private:
-	segment_data* st;
+	segment_data* st = nullptr;
 	int size;
 public:
 	segment_tree(std::vector<segment_data>& v) {
@@ -25,6 +25,13 @@ public:
 		}
 	}
 
+	segment_tree(const segment_tree& other) : size(other.size) {
+		st = new segment_data[2*size];
+		memcpy(st, other.st, 2*size*sizeof(segment_data));
+	}
+
+	segment_tree operator= (const segment_tree& other) = delete;
+
 	~segment_tree() {
 		delete[] st;
 	}
@@ -37,7 +44,7 @@ public:
 		}
 	}
 
-	segment_data query(int l, int r) {
+	segment_data query(int l, int r) const {
 		segment_data ans;
 		for (l += size, r += size; l < r; l >>= 1, r >>= 1) {
 			if (l&1) ans = segment_data::combine(ans, st[l++]);
@@ -46,7 +53,7 @@ public:
 		return ans;
 	}
 
-	segment_data query(int idx) {
+	segment_data query(int idx) const {
 		return st[idx+size];
 	}
 };
