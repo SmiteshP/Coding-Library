@@ -39,18 +39,19 @@ public:
 	void update(int idx, const segment_data& val) {
 		idx += size;
 		st[idx] = val;
-		for (idx; idx > 1; idx >>= 1) {
-			st[idx>>1] = segment_data::combine(st[idx], st[idx^1]);
+		idx >>= 1;
+		for (idx; idx > 0; idx >>= 1) {
+			st[idx] = segment_data::combine(st[idx<<1], st[idx<<1|1]);
 		}
 	}
 
 	segment_data query(int l, int r) const {
-		segment_data ans;
+		segment_data ans_l, ans_r;
 		for (l += size, r += size; l < r; l >>= 1, r >>= 1) {
-			if (l&1) ans = segment_data::combine(ans, st[l++]);
-			if (r&1) ans = segment_data::combine(ans, st[--r]);
+			if (l&1) ans_l = segment_data::combine(ans_l, st[l++]);
+			if (r&1) ans_r = segment_data::combine(st[--r], ans_r);
 		}
-		return ans;
+		return segment_data::combine(ans_l, ans_r);
 	}
 
 	segment_data query(int idx) const {
