@@ -1,8 +1,6 @@
 struct Timer {
-	using namespace std;
-
 	Timer() {
-		startTimepoint = chrono::high_resolution_clock::now();
+		startTimepoint = std::chrono::high_resolution_clock::now();
 	}
 
 	~Timer() {
@@ -10,17 +8,17 @@ struct Timer {
 	}
 
 	void stop() {
-		auto endTimepoint = chrono::high_resolution_clock::now();
+		auto endTimepoint = std::chrono::high_resolution_clock::now();
 
-		auto start = chrono::time_point_cast<chrono::microseconds>(startTimepoint).time_since_epoch().count();
-		auto end = chrono::time_point_cast<chrono::microseconds>(endTimepoint).time_since_epoch().count();
+		auto start = std::chrono::time_point_cast<std::chrono::microseconds>(startTimepoint).time_since_epoch().count();
+		auto end = std::chrono::time_point_cast<std::chrono::microseconds>(endTimepoint).time_since_epoch().count();
 
 		auto duration = end - start;
 
-		cout << duration*0.001 << " ms" << endl;
+		std::cout << duration*0.001 << " ms" << std::endl;
 	}
 
 private:
-	chrono::time_point<chrono::high_resolution_clock> startTimepoint;
+	std::chrono::time_point<std::chrono::high_resolution_clock> startTimepoint;
 };
 
