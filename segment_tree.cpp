@@ -9,24 +9,21 @@ struct segment_data {
 	}
 };
 
+// Point update, Range query
 class segment_tree {
 private:
-	segment_data* st = nullptr;
 	int size;
+	segment_data* st;
+
 public:
-	segment_tree(std::vector<segment_data>& v) {
-		size = v.size();
-
-		st = new segment_data[2*size];
+	segment_tree(std::vector<segment_data>& v) : size(v.size()), st(new segment_data[2*size]){
 		std::copy(v.begin(), v.end(), st+size);
-
 		for (int i = size-1; i > 0; i--) {
 			st[i] = segment_data::combine(st[2*i], st[2*i+1]);
 		}
 	}
 
-	segment_tree(const segment_tree& other) : size(other.size) {
-		st = new segment_data[2*size];
+	segment_tree(const segment_tree& other) : size(other.size), st(new segment_data[2*size]) {
 		memcpy(st, other.st, 2*size*sizeof(segment_data));
 	}
 
