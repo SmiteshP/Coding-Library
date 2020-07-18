@@ -1,5 +1,5 @@
 // Using int and mod operations instead will be 2-3 times faster
-template <typename T = int> class mInt {
+template <typename T = long long int> class mInt {
 private:
 	T val;
 
@@ -14,21 +14,36 @@ public:
 		return (this->val + other.val)%MOD;
 	}
 
+	inline void operator+= (const mInt<T>& other) {
+		this->val += other.val;
+		this->val %= MOD;
+	}
+
 	inline mInt operator- (const mInt<T>& other) const {
 		return ((this->val - other.val)%MOD + MOD)%MOD;
+	}
+
+	inline void operator-= (const mInt<T>& other) {
+		this->val -= other.val;
+		this->val += MOD;
+		this->val %= MOD;
 	}
 
 	inline mInt operator* (const mInt<T>& other) const {
 		return (this->val * other.val)%MOD;
 	}
 
+	inline void operator*= (const mInt<T>& other) {
+		this->val *= other.val;
+		this->val %= MOD;
+	}
+
 	inline mInt operator/ (const mInt<T>& denominator) const {
 		return (*this) * denominator.mmi();
 	}
 
-	inline mInt& operator= (T n) {
-		this->val = (n%MOD + MOD)%MOD;
-		return *this;
+	inline void operator/= (const mInt<T>& denominator) {
+		(*this) *= denominator.mmi();
 	}
 
 	inline mInt& operator= (const mInt<T>& other) {
@@ -98,7 +113,7 @@ public:
 		int ans = 1;
 		T x = this->val;
 
-		if (x == 0) return 0;
+		if (x == 0) return mInt(0);
 
 		while (p > 0) {
 			if (p&1) {
