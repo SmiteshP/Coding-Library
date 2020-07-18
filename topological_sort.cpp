@@ -1,7 +1,7 @@
 // vertex indexing expected from 0
-// input format adjacency list
-// output format {is order valid?, order}
-std::pair <bool, std::vector <int> > topological_sort(std::vector <std::vector <int> >& edges) {
+// input format  : adjacency list
+// output format : empty vector if cycle exists else toposort order
+std::vector <int> topological_sort(std::vector <std::vector <int> >& edges) {
 	int num_vertex = edges.size();
 	std::vector <int> in_degree(num_vertex);
 	for (std::vector <int>& children : edges) {
@@ -24,6 +24,10 @@ std::pair <bool, std::vector <int> > topological_sort(std::vector <std::vector <
 			if (!in_degree[child]) process_queue.push(child);
 		}
 	}
-	return std::make_pair((tsort.size() == num_vertex), tsort);
+	if (tsort.size() == num_vertex) {
+		return tsort;
+	} else {
+		return {};
+	}
 }
 
