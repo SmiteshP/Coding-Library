@@ -40,8 +40,8 @@ public:
 
 	void update(int l, int r, const segment_data& val) {
 		for (l += size, r += size; l < r; l >>= 1, r >>= 1) {
-			if (l&1) st[l++] = segment_data::combine(st[l], val);
-			if (r&1) st[r] = segment_data::combine(val, st[--r]);
+			if (l&1) st[l] = segment_data::combine(st[l], val), ++l;
+			if (r&1) --r, st[r] = segment_data::combine(val, st[r]);
 		}
 	}
 

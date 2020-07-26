@@ -37,7 +37,7 @@ public:
 		idx += size;
 		st[idx] = val;
 		idx >>= 1;
-		for (idx; idx > 0; idx >>= 1) {
+		for (; idx > 0; idx >>= 1) {
 			st[idx] = segment_data::combine(st[idx<<1], st[idx<<1|1]);
 		}
 	}
