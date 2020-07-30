@@ -24,7 +24,7 @@ std::vector <int> topological_sort(std::vector <std::vector <int> >& edges) {
 			if (!in_degree[child]) process_queue.push(child);
 		}
 	}
-	if (tsort.size() == num_vertex) {
+	if (tsort.size() == (long unsigned int)num_vertex) {
 		return tsort;
 	} else {
 		return {};
